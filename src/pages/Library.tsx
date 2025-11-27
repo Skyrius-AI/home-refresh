@@ -1,0 +1,131 @@
+import { Search, FileText, PlayCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+
+const contentItems = [
+  {
+    id: 1,
+    type: "video",
+    title: "The world: Erera saoutation more man Skyrius",
+    date: "03/09/2023",
+    description: "Auto-generated dolor sit amet, connections fonde sourks, and implementaeral line commrezation...",
+    relatedNotes: 3,
+  },
+  {
+    id: 2,
+    type: "document",
+    title: "Research and bymmarale",
+    date: "03/09/2023",
+    description: "Auto-generated dolor sit amet, connections fonde sourks, and implementaional line convernation...",
+    relatedNotes: 3,
+  },
+  {
+    id: 3,
+    type: "document",
+    title: "The Viewer ersentilbions and Skyrius",
+    date: "03/09/2023",
+    description: "Auto-generated dolor sit amet, connections fonde sourks, and implementaural line convernation...",
+    relatedNotes: 3,
+  },
+  {
+    id: 4,
+    type: "document",
+    title: "Flountian understanding tidal propriatation",
+    date: "03/09/2023",
+    description: "Auto-generated dolor sit amet, connections fande sourks, and implementaional line congerosation...",
+    relatedNotes: 3,
+  },
+  {
+    id: 5,
+    type: "document",
+    title: "Skyrius are unload source in karnamy",
+    date: "02/03/2023",
+    description: "Auto-generated dolor sit amet, consecutiva fonce acurks, and implementaeral line commerication...",
+    relatedNotes: 0,
+  },
+  {
+    id: 6,
+    type: "document",
+    title: "Skyrius is the conrmiiichnad",
+    date: "02/04/2023",
+    description: "Auto-generated dolor sit amet, consecutiva fonce acurks, and implementaeral line commerication...",
+    relatedNotes: 3,
+  },
+];
+
+const tabs = ["All", "Papers", "Videos", "Podcasts"];
+
+export default function Library() {
+  const [activeTab, setActiveTab] = useState("All");
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-8 py-6">
+        <div className="flex items-center justify-between mb-8">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Input
+              placeholder="Search"
+              className="pl-10 bg-card border-border"
+            />
+          </div>
+          <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
+            Add Source
+          </Button>
+        </div>
+
+        <div className="flex gap-4 mb-8 border-b border-border">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`pb-3 px-1 text-sm font-medium transition-colors relative ${
+                activeTab === tab
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {tab}
+              {activeTab === tab && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
+              )}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {contentItems.map((item) => (
+            <Card key={item.id} className="bg-card border-border hover:border-accent transition-colors cursor-pointer">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between mb-3">
+                  {item.type === "video" ? (
+                    <PlayCircle className="w-6 h-6 text-accent" />
+                  ) : (
+                    <FileText className="w-6 h-6 text-accent" />
+                  )}
+                </div>
+                <CardTitle className="text-base font-semibold leading-tight">
+                  {item.title}
+                </CardTitle>
+                <p className="text-xs text-muted-foreground mt-1">{item.date}</p>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
+                  {item.description}
+                </p>
+                {item.relatedNotes > 0 && (
+                  <Badge variant="secondary" className="text-xs">
+                    Related to {item.relatedNotes} existing notes
+                  </Badge>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
