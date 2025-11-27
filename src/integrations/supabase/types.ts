@@ -14,7 +14,228 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      connections: {
+        Row: {
+          connection_strength: number | null
+          created_at: string
+          id: string
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+          user_id: string
+        }
+        Insert: {
+          connection_strength?: number | null
+          created_at?: string
+          id?: string
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+          user_id: string
+        }
+        Update: {
+          connection_strength?: number | null
+          created_at?: string
+          id?: string
+          source_id?: string
+          source_type?: string
+          target_id?: string
+          target_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      library_item_tags: {
+        Row: {
+          created_at: string
+          id: string
+          library_item_id: string
+          tag_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          library_item_id: string
+          tag_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          library_item_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "library_item_tags_library_item_id_fkey"
+            columns: ["library_item_id"]
+            isOneToOne: false
+            referencedRelation: "library_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "library_item_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      library_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          item_type: string
+          source_date: string | null
+          title: string
+          updated_at: string
+          url: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          item_type: string
+          source_date?: string | null
+          title: string
+          updated_at?: string
+          url?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          item_type?: string
+          source_date?: string | null
+          title?: string
+          updated_at?: string
+          url?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      note_tags: {
+        Row: {
+          created_at: string
+          id: string
+          note_id: string
+          tag_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          note_id: string
+          tag_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          note_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "note_tags_note_id_fkey"
+            columns: ["note_id"]
+            isOneToOne: false
+            referencedRelation: "notes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "note_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notes: {
+        Row: {
+          content: string | null
+          created_at: string
+          folder_path: string | null
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          folder_path?: string | null
+          id?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          folder_path?: string | null
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tags: {
+        Row: {
+          color: string | null
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
