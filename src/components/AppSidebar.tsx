@@ -1,5 +1,7 @@
-import { Home, Library, FileText, Clock, User } from "lucide-react";
+import { Home, Library, FileText, Clock, User, LogOut } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 
 const sidebarItems = [
   { icon: Home, label: "Home", path: "/" },
@@ -10,6 +12,8 @@ const sidebarItems = [
 ];
 
 export function AppSidebar() {
+  const { signOut } = useAuth();
+
   return (
     <aside className="fixed left-0 top-0 h-screen w-20 bg-sidebar border-r border-border flex flex-col items-center py-6 gap-8">
       <div className="flex flex-col items-center gap-2 mb-4">
@@ -35,6 +39,16 @@ export function AppSidebar() {
           </NavLink>
         ))}
       </nav>
+
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={signOut}
+        className="flex flex-col items-center gap-1 h-auto py-3 text-muted-foreground hover:text-foreground"
+      >
+        <LogOut className="w-5 h-5" />
+        <span className="text-xs">Logout</span>
+      </Button>
     </aside>
   );
 }
