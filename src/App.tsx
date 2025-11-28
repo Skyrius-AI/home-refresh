@@ -7,8 +7,6 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { useAuth } from "@/hooks/useAuth";
 import { TourProvider } from "@/contexts/TourContext";
 import { GlobalTour } from "@/components/GlobalTour";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { BackgroundBeams } from "@/components/ui/background-beams";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
@@ -42,20 +40,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-function ProtectedLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full relative">
-        <BackgroundBeams className="opacity-30" />
-        <AppSidebar />
-        <SidebarInset className="flex-1 relative z-10">
-          {children}
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
-  );
-}
-
 function AppContent() {
   return (
     <div className="dark">
@@ -72,9 +56,12 @@ function AppContent() {
           path="/"
           element={
             <ProtectedRoute>
-              <ProtectedLayout>
-                <Index />
-              </ProtectedLayout>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Index />
+                </main>
+              </div>
             </ProtectedRoute>
           }
         />
@@ -82,9 +69,12 @@ function AppContent() {
           path="/library"
           element={
             <ProtectedRoute>
-              <ProtectedLayout>
-                <Library />
-              </ProtectedLayout>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Library />
+                </main>
+              </div>
             </ProtectedRoute>
           }
         />
@@ -92,9 +82,12 @@ function AppContent() {
           path="/notes"
           element={
             <ProtectedRoute>
-              <ProtectedLayout>
-                <Notes />
-              </ProtectedLayout>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Notes />
+                </main>
+              </div>
             </ProtectedRoute>
           }
         />
@@ -102,9 +95,12 @@ function AppContent() {
           path="/recall"
           element={
             <ProtectedRoute>
-              <ProtectedLayout>
-                <Recall />
-              </ProtectedLayout>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Recall />
+                </main>
+              </div>
             </ProtectedRoute>
           }
         />
@@ -112,9 +108,12 @@ function AppContent() {
           path="/profile"
           element={
             <ProtectedRoute>
-              <ProtectedLayout>
-                <Profile />
-              </ProtectedLayout>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Profile />
+                </main>
+              </div>
             </ProtectedRoute>
           }
         />
