@@ -94,7 +94,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="flex items-start gap-4 mb-8">
+        <div className="flex items-start gap-4 mb-8" data-tour-id="social-header">
           <Avatar className="w-16 h-16">
             <AvatarFallback className="bg-muted">
               <UserIcon className="w-8 h-8" />
@@ -152,7 +152,7 @@ export default function Profile() {
 
             <div>
               <h3 className="text-lg font-semibold mb-4">Insight Tree</h3>
-              <Card>
+              <Card data-tour-id="insight-tree">
                 <CardContent className="pt-6">
                   {insightTree.map((item, index) => (
                     <TreeItem key={index} item={item} />

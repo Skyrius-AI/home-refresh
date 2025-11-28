@@ -72,7 +72,7 @@ export default function Library() {
               className="pl-10 bg-card border-border"
             />
           </div>
-          <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button className="bg-accent text-accent-foreground hover:bg-accent/90" data-tour-id="add-source-btn">
             Add Source
           </Button>
         </div>
@@ -97,8 +97,8 @@ export default function Library() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {contentItems.map((item) => (
-            <Card key={item.id} className="bg-card border-border hover:border-accent transition-colors cursor-pointer">
+          {contentItems.map((item, index) => (
+            <Card key={item.id} className="bg-card border-border hover:border-accent transition-colors cursor-pointer" data-tour-id={index === 0 ? "content-card-summary" : undefined}>
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between mb-3">
                   {item.type === "video" ? (

@@ -15,7 +15,7 @@ export function AppSidebar() {
   const { signOut } = useAuth();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-20 bg-sidebar border-r border-border flex flex-col items-center py-6 gap-8">
+    <aside className="fixed left-0 top-0 h-screen w-20 bg-sidebar border-r border-border flex flex-col items-center py-6 gap-8" data-tour-id="sidebar-nav">
       <div className="flex flex-col items-center gap-2 mb-4">
         <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
           <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5">

@@ -1,12 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sparkles, Share2 } from "lucide-react";
+import { useTour } from "@/contexts/TourContext";
 
 export default function Index() {
+  const { startTour } = useTour();
+  
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-8 py-6 space-y-6">
-        <Card className="bg-gradient-to-r from-card to-card/50 border-accent/50">
+        {/* Tour restart button */}
+        <div className="flex justify-end">
+          <Button variant="outline" size="sm" onClick={startTour}>
+            Restart Tour
+          </Button>
+        </div>
+        
+        <Card className="bg-gradient-to-r from-card to-card/50 border-accent/50" data-tour-id="weekly-summary">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-xl">Weekly Summary</CardTitle>
@@ -22,7 +32,7 @@ export default function Index() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <Card>
+            <Card data-tour-id="knowledge-graph">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Knowledge Graph Preview</CardTitle>
                 <Button variant="ghost" size="sm">
@@ -104,7 +114,7 @@ export default function Index() {
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">Recommendations</h2>
             
-            <Card className="hover:border-accent transition-colors">
+            <Card className="hover:border-accent transition-colors" data-tour-id="idea-roulette">
               <CardContent className="pt-6 text-center">
                 <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
                   <Sparkles className="w-6 h-6 text-accent" />
