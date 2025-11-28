@@ -39,90 +39,86 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AppContent() {
-  const { user } = useAuth();
-
   return (
     <div className="dark">
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/landing" element={<Landing />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/onboarding" element={<Onboarding />} />
+      <Routes>
+        {/* Public routes */}
+        <Route path="/landing" element={<Landing />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/onboarding" element={<Onboarding />} />
 
-          {/* Protected routes with sidebar */}
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <div className="flex min-h-screen">
-                  <AppSidebar />
-                  <main className="flex-1 ml-20">
-                    <Index />
-                  </main>
-                </div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/library"
-            element={
-              <ProtectedRoute>
-                <div className="flex min-h-screen">
-                  <AppSidebar />
-                  <main className="flex-1 ml-20">
-                    <Library />
-                  </main>
-                </div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/notes"
-            element={
-              <ProtectedRoute>
-                <div className="flex min-h-screen">
-                  <AppSidebar />
-                  <main className="flex-1 ml-20">
-                    <Notes />
-                  </main>
-                </div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/recall"
-            element={
-              <ProtectedRoute>
-                <div className="flex min-h-screen">
-                  <AppSidebar />
-                  <main className="flex-1 ml-20">
-                    <Recall />
-                  </main>
-                </div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <div className="flex min-h-screen">
-                  <AppSidebar />
-                  <main className="flex-1 ml-20">
-                    <Profile />
-                  </main>
-                </div>
-              </ProtectedRoute>
-            }
-          />
+        {/* Protected routes with sidebar */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Index />
+                </main>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/library"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Library />
+                </main>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notes"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Notes />
+                </main>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recall"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Recall />
+                </main>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen">
+                <AppSidebar />
+                <main className="flex-1 ml-20">
+                  <Profile />
+                </main>
+              </div>
+            </ProtectedRoute>
+          }
+        />
 
-          {/* Catch-all */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+        {/* Catch-all */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }
@@ -130,7 +126,9 @@ function AppContent() {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <AppContent />
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
