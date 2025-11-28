@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AppSidebar } from "@/components/AppSidebar";
 import { useAuth } from "@/hooks/useAuth";
+import { TourProvider } from "@/contexts/TourContext";
+import { GlobalTour } from "@/components/GlobalTour";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
@@ -127,7 +129,10 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
-        <AppContent />
+        <TourProvider>
+          <GlobalTour />
+          <AppContent />
+        </TourProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -90,7 +90,7 @@ export default function Notes() {
           </Button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-6 py-6">
+        <div className="flex-1 overflow-y-auto px-6 py-6" data-tour-id="editor-main">
           <h1 className="text-3xl font-bold mb-4">The Future of PKM</h1>
           <div className="prose prose-invert max-w-none">
             <p>
@@ -119,7 +119,7 @@ export default function Notes() {
         </div>
       </div>
 
-      <div className="w-80 bg-card border-l border-border flex flex-col">
+      <div className="w-80 bg-card border-l border-border flex flex-col" data-tour-id="ai-sidebar">
         <div className="border-b border-border px-4 py-3 flex items-center justify-between">
           <h2 className="font-semibold">AI Companion & Graph</h2>
           <button className="text-muted-foreground hover:text-foreground">×</button>
