@@ -30,14 +30,17 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Check if user has completed the tour
+    // Check if user should see the tour (first-time user who just completed onboarding)
+    const shouldShowTour = localStorage.getItem('skyrius-show-tour');
     const tourCompleted = localStorage.getItem('skyrius-tour-completed');
     
-    // Start tour automatically only on first visit and on the home page
-    if (!tourCompleted && location.pathname === '/') {
+    // Start tour only for first-time users on the home page
+    if (shouldShowTour === 'true' && !tourCompleted && location.pathname === '/') {
       // Small delay to ensure page is fully rendered
       const timer = setTimeout(() => {
         setIsTourActive(true);
+        // Clear the flag so tour doesn't restart on refresh
+        localStorage.removeItem('skyrius-show-tour');
       }, 1000);
       return () => clearTimeout(timer);
     }

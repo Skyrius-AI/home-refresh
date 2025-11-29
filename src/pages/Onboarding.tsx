@@ -49,6 +49,9 @@ export default function Onboarding() {
   };
 
   const handleComplete = () => {
+    // Set flag to trigger tour for first-time users
+    localStorage.setItem('skyrius-show-tour', 'true');
+    
     toast({
       title: "Welcome to brain-node!",
       description: "Let's start building your second brain.",
