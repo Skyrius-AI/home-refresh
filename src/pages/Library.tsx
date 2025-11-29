@@ -1,11 +1,9 @@
-import { Search, FileText, PlayCircle } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { useState } from "react";
 import Masonry from "react-responsive-masonry";
+import { LibraryCard } from "@/components/LibraryCard";
 
 const contentItems = [
   {
@@ -100,38 +98,11 @@ export default function Library() {
 
         <Masonry columnsCount={4} gutter="16px">
           {contentItems.map((item, index) => (
-            <HoverBorderGradient
+            <LibraryCard
               key={item.id}
-              containerClassName="cursor-pointer"
-              duration={2}
-              data-tour-id={index === 0 ? "content-card-summary" : undefined}
-            >
-              <Card className="bg-card border-0 shadow-none h-full">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between mb-3">
-                    {item.type === "video" ? (
-                      <PlayCircle className="w-6 h-6 text-accent" />
-                    ) : (
-                      <FileText className="w-6 h-6 text-accent" />
-                    )}
-                  </div>
-                  <CardTitle className="text-base font-semibold leading-tight">
-                    {item.title}
-                  </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-1">{item.date}</p>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
-                    {item.description}
-                  </p>
-                  {item.relatedNotes > 0 && (
-                    <Badge variant="secondary" className="text-xs">
-                      Related to {item.relatedNotes} existing notes
-                    </Badge>
-                  )}
-                </CardContent>
-              </Card>
-            </HoverBorderGradient>
+              item={item}
+              isTourTarget={index === 0}
+            />
           ))}
         </Masonry>
       </div>
