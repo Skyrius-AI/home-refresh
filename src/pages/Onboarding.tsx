@@ -53,7 +53,7 @@ export default function Onboarding() {
     localStorage.setItem('skyrius-show-tour', 'true');
     
     toast({
-      title: "Welcome to brain-node!",
+      title: "Welcome to Skyrius!",
       description: "Let's start building your second brain.",
     });
     navigate("/");
@@ -72,7 +72,7 @@ export default function Onboarding() {
               <Brain className="w-10 h-10" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Welcome to brain-node!</CardTitle>
+          <CardTitle className="text-2xl">Welcome to Skyrius!</CardTitle>
           <CardDescription>
             Let's get you started with the basics
           </CardDescription>

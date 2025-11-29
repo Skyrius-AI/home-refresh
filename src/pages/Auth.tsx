@@ -134,7 +134,7 @@ export default function Auth() {
           </div>
           <CardTitle className="text-2xl">{isSignup ? "Create Account" : "Welcome Back"}</CardTitle>
           <CardDescription>
-            {isSignup ? "Start building your second brain" : "Sign in to continue to brain-node"}
+            {isSignup ? "Start building your second brain" : "Sign in to continue to Skyrius"}
           </CardDescription>
         </CardHeader>
         <CardContent>
