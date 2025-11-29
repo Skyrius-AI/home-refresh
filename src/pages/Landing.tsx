@@ -14,7 +14,7 @@ export default function Landing() {
             <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
               <Brain className="w-6 h-6" />
             </div>
-            <span className="text-xl font-bold">brain-node</span>
+            <span className="text-xl font-bold">Skyrius</span>
           </div>
           <div className="flex items-center gap-4">
             <Button variant="ghost" onClick={() => navigate("/auth")}>
@@ -127,7 +127,7 @@ export default function Landing() {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-6">Ready to Build Your Second Brain?</h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Join thousands of thinkers, researchers, and creators using brain-node to amplify their knowledge.
+              Join thousands of thinkers, researchers, and creators using Skyrius to amplify their knowledge.
             </p>
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={() => navigate("/auth?mode=signup")}>
               Get Started for Free
@@ -138,7 +138,7 @@ export default function Landing() {
 
       <footer className="border-t border-border py-8 px-8">
         <div className="max-w-7xl mx-auto text-center text-muted-foreground">
-          <p>© 2024 brain-node. Your knowledge, intelligently connected.</p>
+          <p>© 2024 Skyrius. Your knowledge, intelligently connected.</p>
         </div>
       </footer>
     </div>
