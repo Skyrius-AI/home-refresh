@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { FlipWords } from "@/components/ui/flip-words";
+import { EncryptedText } from "@/components/ui/encrypted-text";
+import { TextHoverEffect } from "@/components/ui/text-hover-effect";
+import { RippleBackground } from "@/components/ui/ripple-background";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -26,13 +29,11 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <RippleBackground containerClassName="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="w-full px-8 py-6 flex items-center justify-between">
-        <div className="flex items-center">
-          <span className="text-sm font-medium tracking-[0.3em] text-foreground">
-            SKYRIUS
-          </span>
+      <header className="w-full px-8 py-6 flex items-center justify-between pointer-events-auto relative z-20">
+        <div className="flex items-center h-12 w-48">
+          <TextHoverEffect text="SKYRIUS" className="h-full w-full" />
         </div>
         <div className="flex items-center gap-3">
           <Button 
@@ -52,7 +53,7 @@ export default function Landing() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-8">
+      <main className="flex-1 flex items-center justify-center px-8 pointer-events-auto relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -60,7 +61,11 @@ export default function Landing() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground"
           >
-            The most thoughtful second brain you'll ever build.
+            <EncryptedText 
+              text="The most thoughtful second brain you'll ever build." 
+              interval={30}
+              className="font-sans"
+            />
           </motion.h1>
 
           <motion.div
@@ -79,7 +84,7 @@ export default function Landing() {
 
       {/* Theme Toggle */}
       {mounted && (
-        <div className="fixed bottom-6 left-6">
+        <div className="fixed bottom-6 left-6 z-30 pointer-events-auto">
           <div className="flex items-center bg-secondary rounded-full p-1 border border-border">
             <button
               onClick={() => setTheme("dark")}
@@ -104,6 +109,6 @@ export default function Landing() {
           </div>
         </div>
       )}
-    </div>
+    </RippleBackground>
   );
 }
