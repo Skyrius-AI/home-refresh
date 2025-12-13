@@ -37,8 +37,9 @@ export default function Landing() {
 
       {/* Header */}
       <header className="w-full px-8 py-6 flex items-center justify-between relative z-30">
-        <div className="flex items-center h-12 w-48">
-          <TextHoverEffect text="SKYRIUS" className="h-full w-full" />
+        <div className="relative flex items-center h-12 w-48">
+          <div className="absolute inset-0 rounded-xl bg-black/10 dark:bg-white/10 backdrop-blur-sm" />
+          <TextHoverEffect text="SKYRIUS" className="relative h-full w-full" />
         </div>
 
         <div className="flex items-center gap-3">
