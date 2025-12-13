@@ -30,10 +30,10 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
-      <div className="absolute inset-0 w-full h-full bg-background z-0 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
-      <Boxes />
+      <Boxes className="z-10" />
+      <div className="absolute inset-0 w-full h-full bg-background z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
       {/* Header */}
-      <header className="w-full px-8 py-6 flex items-center justify-between pointer-events-auto relative z-20">
+      <header className="w-full px-8 py-6 flex items-center justify-between relative z-30">
         <div className="flex items-center h-12 w-48">
           <TextHoverEffect text="SKYRIUS" className="h-full w-full" />
         </div>
@@ -55,7 +55,7 @@ export default function Landing() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-8 pointer-events-auto relative z-10">
+      <main className="flex-1 flex items-center justify-center px-8 relative z-30 pointer-events-none">
         <div className="max-w-4xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -77,7 +77,7 @@ export default function Landing() {
             className="mt-8 flex items-center justify-center gap-3"
           >
             <span className="text-muted-foreground text-lg">A space for</span>
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary border border-border text-foreground font-medium">
+            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary border border-border text-foreground font-medium pointer-events-auto">
               <FlipWords words={ROTATING_WORDS} duration={2500} className="text-foreground" />
             </span>
           </motion.div>
