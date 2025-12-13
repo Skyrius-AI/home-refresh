@@ -2,23 +2,31 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   const rows = new Array(150).fill(1);
   const cols = new Array(100).fill(1);
+  const { resolvedTheme } = useTheme();
   
-  // Monochrome grayscale colors matching the minimal-brutalist design system
-  const colors = [
+  // Theme-aware monochrome colors
+  const darkColors = [
     "hsl(0 0% 20%)",
     "hsl(0 0% 25%)",
     "hsl(0 0% 30%)",
     "hsl(0 0% 35%)",
     "hsl(0 0% 40%)",
-    "hsl(0 0% 45%)",
-    "hsl(0 0% 50%)",
-    "hsl(0 0% 55%)",
-    "hsl(0 0% 60%)",
   ];
+  
+  const lightColors = [
+    "hsl(0 0% 70%)",
+    "hsl(0 0% 75%)",
+    "hsl(0 0% 80%)",
+    "hsl(0 0% 85%)",
+    "hsl(0 0% 90%)",
+  ];
+  
+  const colors = resolvedTheme === "dark" ? darkColors : lightColors;
   
   const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)];
