@@ -42,7 +42,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 function AppContent() {
   return (
-    <div className="dark">
+    <div className="min-h-screen bg-background text-foreground">
       <Toaster />
       <Sonner />
       <Routes>

@@ -21,7 +21,7 @@ const ROTATING_WORDS = [
 
 export default function Landing() {
   const navigate = useNavigate();
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   // Prevent hydration mismatch (next-themes requirement)
@@ -116,7 +116,7 @@ export default function Landing() {
             <button
               onClick={() => setTheme("dark")}
               className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${
-                theme === "dark"
+                (resolvedTheme ?? theme) === "dark"
                   ? "bg-foreground text-background shadow-xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
@@ -126,7 +126,7 @@ export default function Landing() {
             <button
               onClick={() => setTheme("light")}
               className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${
-                theme === "light"
+                (resolvedTheme ?? theme) === "light"
                   ? "bg-foreground text-background shadow-xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
