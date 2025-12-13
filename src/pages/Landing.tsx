@@ -36,22 +36,35 @@ export default function Landing() {
       <header className="w-full px-8 py-6 flex items-center justify-between relative z-30">
         <div className="flex items-center h-12 w-48">
           <TextHoverEffect text="SKYRIUS" className="h-full w-full" />
+          
         </div>
         <div className="flex items-center gap-3">
-          <Button 
-            variant="outline" 
-            className="rounded-full px-6 border-border text-foreground hover:bg-secondary hover:text-foreground"
-            onClick={() => navigate("/auth")}
-          >
-            Log in
-          </Button>
-          <Button 
-            className="rounded-full px-6 bg-foreground text-background hover:bg-foreground/90"
-            onClick={() => navigate("/auth?mode=signup")}
-          >
-            Sign up
-          </Button>
-        </div>
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+  >
+    <Button 
+      variant="outline"
+      className="rounded-full px-6 border-border text-foreground hover:bg-secondary hover:text-foreground"
+      onClick={() => navigate("/auth")}
+    >
+      Log in
+    </Button>
+  </motion.div>
+
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+  >
+    <Button 
+      className="rounded-full px-6 border-border text-foreground hover:bg-secondary hover:text-foreground"
+      onClick={() => navigate("/auth?mode=signup")}
+    >
+      Sign up
+    </Button>
+  </motion.div>
+</div>
+
       </header>
 
       {/* Main Content */}
