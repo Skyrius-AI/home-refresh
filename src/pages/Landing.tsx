@@ -40,7 +40,7 @@ export default function Landing() {
         <div className="flex items-center gap-3">
           <Button 
             variant="outline" 
-            className="rounded-full px-6 border-border hover:bg-secondary"
+            className="rounded-full px-6 border-border text-foreground hover:bg-secondary hover:text-foreground"
             onClick={() => navigate("/auth")}
           >
             Log in
