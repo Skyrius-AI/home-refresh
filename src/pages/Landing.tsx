@@ -87,12 +87,12 @@ export default function Landing() {
       {/* Theme Toggle */}
       {mounted && (
         <div className="fixed bottom-6 left-6 z-30 pointer-events-auto">
-          <div className="flex items-center bg-secondary rounded-full p-1 border border-border">
+          <div className="flex items-center bg-secondary rounded-full p-1 border border-border shadow-sm">
             <button
               onClick={() => setTheme("dark")}
-              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-colors ${
+              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${
                 theme === "dark"
-                  ? "bg-background text-foreground"
+                  ? "bg-foreground text-background shadow-xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -100,9 +100,9 @@ export default function Landing() {
             </button>
             <button
               onClick={() => setTheme("light")}
-              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-colors ${
+              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${
                 theme === "light"
-                  ? "bg-background text-foreground"
+                  ? "bg-foreground text-background shadow-xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
