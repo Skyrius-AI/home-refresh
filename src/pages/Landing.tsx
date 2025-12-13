@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { FlipWords } from "@/components/ui/flip-words";
-import { EncryptedText } from "@/components/ui/encrypted-text";
+import { EncryptedText } from "@/components/ui/encrypted-heading";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import { Boxes } from "@/components/ui/background-boxes";
 import { motion } from "framer-motion";
@@ -63,9 +63,8 @@ export default function Landing() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground"
           >
-            <EncryptedText 
-              text="The most thoughtful second brain you'll ever build." 
-              interval={30}
+            <EncryptedHeading
+              text="The most thoughtful second brain you'll ever build."
               className="font-sans"
             />
           </motion.h1>
