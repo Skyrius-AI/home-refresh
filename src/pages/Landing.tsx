@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FlipWords } from "@/components/ui/flip-words";
 import { EncryptedText } from "@/components/ui/encrypted-text";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
-import { RippleBackground } from "@/components/ui/ripple-background";
+import { Boxes } from "@/components/ui/background-boxes";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -29,7 +29,9 @@ export default function Landing() {
   }, []);
 
   return (
-    <RippleBackground containerClassName="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+      <div className="absolute inset-0 w-full h-full bg-background z-0 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
+      <Boxes />
       {/* Header */}
       <header className="w-full px-8 py-6 flex items-center justify-between pointer-events-auto relative z-20">
         <div className="flex items-center h-12 w-48">
@@ -109,6 +111,6 @@ export default function Landing() {
           </div>
         </div>
       )}
-    </RippleBackground>
+    </div>
   );
 }
