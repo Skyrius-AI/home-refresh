@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { FlipWords } from "@/components/ui/flip-words";
-import { EncryptedText } from "@/components/ui/encrypted-heading";
+import { EncryptedHeading } from "@/components/ui/encrypted-heading";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import { Boxes } from "@/components/ui/background-boxes";
 import { motion } from "framer-motion";
