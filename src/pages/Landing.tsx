@@ -64,7 +64,7 @@ export default function Landing() {
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <Button
-              className="rounded-full px-6 border-border text-foreground hover:bg-secondary hover:text-foreground"
+              className="rounded-full px-6 bg-foreground text-background hover:bg-foreground/90"
               onClick={() => navigate("/auth?mode=signup")}
             >
               Sign up
