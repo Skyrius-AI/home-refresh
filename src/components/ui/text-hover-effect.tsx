@@ -44,14 +44,14 @@ export function TextHoverEffect({ text, duration = 0, className }: TextHoverEffe
         <linearGradient
           id="textGradient"
           gradientUnits="userSpaceOnUse"
-          x1="0%"
+          x1="100%"
           y1="0%"
-          x2="100%"
-          y2="100%"
+          x2="0%"
+          y2="0%"
         >
           <stop offset="0%" stopColor="hsl(var(--primary))" />
           <stop offset="50%" stopColor="hsl(var(--accent))" />
-          <stop offset="100%" stopColor="hsl(var(--primary))" />
+          <stop offset="100%" stopColor="hsl(var(--secondary))" />
         </linearGradient>
 
         <motion.radialGradient
@@ -71,14 +71,14 @@ export function TextHoverEffect({ text, duration = 0, className }: TextHoverEffe
         </mask>
       </defs>
 
-      {/* Outline text */}
+      {/* Outline text - theme aware: light in dark, dark in light */}
       <text
         x="50%"
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.5"
-        className="fill-transparent stroke-muted-foreground/30 font-bold"
+        className="fill-transparent stroke-foreground/40 font-bold"
         style={{ fontSize: "48px" }}
       >
         {text}

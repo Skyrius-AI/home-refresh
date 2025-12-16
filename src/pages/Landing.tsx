@@ -76,8 +76,9 @@ export default function Landing() {
       {/* Main content */}
       <main className="flex-1 flex items-center justify-center px-8 relative z-30 pointer-events-none">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="h-24 md:h-32 lg:h-40 w-full max-w-2xl mx-auto mb-6">
-            <TextHoverEffect text="SKYRIUS" className="h-full w-full" />
+          <div className="h-24 md:h-32 lg:h-40 w-full max-w-2xl mx-auto mb-6 relative pointer-events-auto">
+            <div className="absolute inset-0 rounded-2xl bg-secondary/80 border border-border backdrop-blur-sm" />
+            <TextHoverEffect text="SKYRIUS" className="relative h-full w-full" />
           </div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -101,11 +102,11 @@ export default function Landing() {
               A space for
             </span>
 
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary border border-border text-foreground font-medium pointer-events-auto">
+            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-foreground border border-border text-background font-medium pointer-events-auto">
               <FlipWords
                 words={ROTATING_WORDS}
                 duration={2500}
-                className="text-foreground"
+                className="text-background"
               />
             </span>
           </motion.div>
