@@ -2,59 +2,6 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import Masonry from "react-responsive-masonry";
-import { LibraryCard } from "@/components/LibraryCard";
-
-const contentItems = [
-  {
-    id: 1,
-    type: "video",
-    title: "The world: Erera saoutation more man Skyrius",
-    date: "03/09/2023",
-    description: "Auto-generated dolor sit amet, connections fonde sourks, and implementaeral line commrezation...",
-    relatedNotes: 3,
-  },
-  {
-    id: 2,
-    type: "document",
-    title: "Research and bymmarale",
-    date: "03/09/2023",
-    description: "Auto-generated dolor sit amet, connections fonde sourks, and implementaional line convernation...",
-    relatedNotes: 3,
-  },
-  {
-    id: 3,
-    type: "document",
-    title: "The Viewer ersentilbions and Skyrius",
-    date: "03/09/2023",
-    description: "Auto-generated dolor sit amet, connections fonde sourks, and implementaural line convernation...",
-    relatedNotes: 3,
-  },
-  {
-    id: 4,
-    type: "document",
-    title: "Flountian understanding tidal propriatation",
-    date: "03/09/2023",
-    description: "Auto-generated dolor sit amet, connections fande sourks, and implementaional line congerosation...",
-    relatedNotes: 3,
-  },
-  {
-    id: 5,
-    type: "document",
-    title: "Skyrius are unload source in karnamy",
-    date: "02/03/2023",
-    description: "Auto-generated dolor sit amet, consecutiva fonce acurks, and implementaeral line commerication...",
-    relatedNotes: 0,
-  },
-  {
-    id: 6,
-    type: "document",
-    title: "Skyrius is the conrmiiichnad",
-    date: "02/04/2023",
-    description: "Auto-generated dolor sit amet, consecutiva fonce acurks, and implementaeral line commerication...",
-    relatedNotes: 3,
-  },
-];
 
 const tabs = ["All", "Papers", "Videos", "Podcasts"];
 
@@ -72,7 +19,7 @@ export default function Library() {
               className="pl-10 bg-card border-border"
             />
           </div>
-          <Button className="bg-accent text-accent-foreground hover:bg-accent/90" data-tour-id="add-source-btn">
+          <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
             Add Source
           </Button>
         </div>
@@ -96,15 +43,9 @@ export default function Library() {
           ))}
         </div>
 
-        <Masonry columnsCount={4} gutter="16px">
-          {contentItems.map((item, index) => (
-            <LibraryCard
-              key={item.id}
-              item={item}
-              isTourTarget={index === 0}
-            />
-          ))}
-        </Masonry>
+        <div className="flex items-center justify-center h-64 text-muted-foreground">
+          <p>No sources added yet. Click "Add Source" to get started.</p>
+        </div>
       </div>
     </div>
   );

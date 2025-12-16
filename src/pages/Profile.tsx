@@ -1,38 +1,9 @@
 import { Bell, Search, User as UserIcon, ChevronRight, ChevronDown, FolderClosed, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useState } from "react";
-
-const pinnedInsights = [
-  { title: "The Future of PKM in Management" },
-  { title: "How to spank Slarket Ibugins" },
-  { title: "Unuersaand Knowledge Connections" },
-];
-
-const recentActivity = [
-  { title: "The Future of PKM", time: "2 minuts ago" },
-  { title: "The Future of PKM", time: "2 minuts ago" },
-  { title: "The Future of PKM", time: "2 minuts ago" },
-  { title: "The Future of PKM", time: "2 minuts ago" },
-];
-
-const insightTree = [
-  {
-    name: "Product Management",
-    expanded: true,
-    children: [
-      { name: "Frameworks" },
-      { name: "Metrics" },
-      { name: "Slarket Management" },
-      { name: "Conferent/Dugins" },
-      { name: "Interaction" },
-      { name: "Maindernent" },
-      { name: "Paerem and Reports", children: [{ name: "Compare insights Analysis" }] },
-    ],
-  },
-  { name: "Frameworks" },
-];
+import { useAuth } from "@/hooks/useAuth";
 
 function TreeItem({ item, level = 0 }: { item: any; level?: number }) {
   const [expanded, setExpanded] = useState(item.expanded || false);
@@ -73,6 +44,7 @@ function TreeItem({ item, level = 0 }: { item: any; level?: number }) {
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState("Portfolio");
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen bg-background">
@@ -94,7 +66,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="flex items-start gap-4 mb-8" data-tour-id="social-header">
+        <div className="flex items-start gap-4 mb-8">
           <Avatar className="w-16 h-16">
             <AvatarFallback className="bg-muted">
               <UserIcon className="w-8 h-8" />
@@ -102,20 +74,21 @@ export default function Profile() {
           </Avatar>
           <div className="flex-1">
             <div className="flex items-center gap-4 mb-2">
-              <h2 className="text-2xl font-bold">Alex Chen</h2>
-              <Button size="sm" className="bg-foreground text-background hover:bg-foreground/90">
-                Follow
+              <h2 className="text-2xl font-bold">{user?.email?.split('@')[0] || 'User'}</h2>
+              <Button size="sm" variant="outline">
+                Edit Profile
               </Button>
             </div>
+            <p className="text-muted-foreground">{user?.email}</p>
           </div>
           <div className="flex gap-8">
             <div className="text-center">
-              <div className="text-2xl font-bold">520</div>
+              <div className="text-2xl font-bold">0</div>
               <div className="text-sm text-muted-foreground">Connections</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">1.2k</div>
-              <div className="text-sm text-muted-foreground">Followers</div>
+              <div className="text-2xl font-bold">0</div>
+              <div className="text-sm text-muted-foreground">Notes</div>
             </div>
           </div>
         </div>
@@ -139,24 +112,22 @@ export default function Profile() {
           <div className="lg:col-span-2 space-y-6">
             <div>
               <h3 className="text-lg font-semibold mb-4">Pinned Insights</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {pinnedInsights.map((insight, index) => (
-                  <Card key={index} className="hover:border-accent transition-colors cursor-pointer">
-                    <CardContent className="pt-6">
-                      <p className="font-medium">{insight.title}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-muted-foreground text-center py-8">
+                    No pinned insights yet. Pin your best notes to showcase them here.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
 
             <div>
               <h3 className="text-lg font-semibold mb-4">Insight Tree</h3>
-              <Card data-tour-id="insight-tree">
+              <Card>
                 <CardContent className="pt-6">
-                  {insightTree.map((item, index) => (
-                    <TreeItem key={index} item={item} />
-                  ))}
+                  <p className="text-muted-foreground text-center py-8">
+                    Your insight tree will grow as you add notes and connections.
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -164,21 +135,13 @@ export default function Profile() {
 
           <div>
             <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
-            <div className="space-y-3">
-              {recentActivity.map((activity, index) => (
-                <Card key={index} className="hover:border-accent transition-colors cursor-pointer">
-                  <CardContent className="pt-4 pb-4">
-                    <div className="flex items-start gap-3">
-                      <FileText className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm">Created note: {activity.title}</p>
-                        <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <Card>
+              <CardContent className="pt-6">
+                <p className="text-muted-foreground text-center py-8">
+                  No recent activity yet.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
