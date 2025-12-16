@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { FlipWords } from "@/components/ui/flip-words";
 import { EncryptedHeading } from "@/components/ui/encrypted-heading";
-import { TextHoverEffect } from "@/components/ui/text-hover-effect";
+
 import { Boxes } from "@/components/ui/background-boxes";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -76,10 +76,6 @@ export default function Landing() {
       {/* Main content */}
       <main className="flex-1 flex items-center justify-center px-8 relative z-30 pointer-events-none">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="h-24 md:h-32 lg:h-40 w-full max-w-2xl mx-auto mb-6 relative pointer-events-auto">
-            <div className="absolute inset-0 rounded-2xl bg-secondary/80 border border-border backdrop-blur-sm" />
-            <TextHoverEffect text="SKYRIUS" className="relative h-full w-full" />
-          </div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
