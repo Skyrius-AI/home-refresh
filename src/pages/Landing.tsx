@@ -37,10 +37,9 @@ export default function Landing() {
 
       {/* Header */}
       <header className="w-full px-8 py-6 flex items-center justify-between relative z-30">
-        <div className="relative flex items-center h-12 w-48">
-          <div className="absolute inset-0 rounded-xl bg-black/10 dark:bg-white/10 backdrop-blur-sm" />
-          <TextHoverEffect text="SKYRIUS" className="relative h-full w-full" />
-        </div>
+        <span className="text-2xl font-bold tracking-tight text-foreground">
+          SKYRIUS
+        </span>
 
         <div className="flex items-center gap-3">
           {/* Login */}
@@ -77,6 +76,9 @@ export default function Landing() {
       {/* Main content */}
       <main className="flex-1 flex items-center justify-center px-8 relative z-30 pointer-events-none">
         <div className="max-w-4xl mx-auto text-center">
+          <div className="h-24 md:h-32 lg:h-40 w-full max-w-2xl mx-auto mb-6">
+            <TextHoverEffect text="SKYRIUS" className="h-full w-full" />
+          </div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
