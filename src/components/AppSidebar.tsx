@@ -15,7 +15,7 @@ export function AppSidebar() {
   const { signOut } = useAuth();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-20 bg-sidebar border-r border-border flex flex-col items-center py-6 gap-8" data-tour-id="sidebar-nav">
+    <aside className="fixed left-0 top-0 h-screen w-20 bg-sidebar border-r border-border flex flex-col items-center py-6 gap-8">
       <div className="flex flex-col items-center gap-2 mb-4">
         <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
           <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -23,7 +23,7 @@ export function AppSidebar() {
             <path d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.364-6.364l-2.121 2.121M8.757 15.243l-2.121 2.121m12.728 0l-2.121-2.121M8.757 8.757L6.636 6.636" />
           </svg>
         </div>
-        <span className="text-xs font-medium">brain-node</span>
+        <span className="text-xs font-medium">SKYRIUS</span>
       </div>
 
       <nav className="flex-1 flex flex-col gap-4">
