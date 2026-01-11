@@ -1,102 +1,110 @@
 import { useState } from "react";
-import { ChevronRight, ChevronDown, FolderClosed, FileText, Send, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { CollectionView } from "@/components/notes/CollectionView";
+import { DocumentEditor } from "@/components/notes/DocumentEditor";
+import { CreateNoteDialog } from "@/components/notes/CreateNoteDialog";
+import { CreateFolderDialog } from "@/components/notes/CreateFolderDialog";
+import { useNotes, Note } from "@/hooks/useNotes";
+import { useToast } from "@/hooks/use-toast";
 
-function FileTreeItem({ item, level = 0 }: { item: any; level?: number }) {
-  const [expanded, setExpanded] = useState(item.expanded || false);
-
-  return (
-    <div>
-      <div
-        className={`flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer hover:bg-sidebar-accent rounded ${
-          item.active ? "bg-sidebar-accent text-accent" : "text-sidebar-foreground"
-        }`}
-        style={{ paddingLeft: `${level * 12 + 12}px` }}
-        onClick={() => item.type === "folder" && setExpanded(!expanded)}
-      >
-        {item.type === "folder" && (
-          <>
-            {expanded ? (
-              <ChevronDown className="w-4 h-4" />
-            ) : (
-              <ChevronRight className="w-4 h-4" />
-            )}
-            <FolderClosed className="w-4 h-4" />
-          </>
-        )}
-        {item.type === "file" && <FileText className="w-4 h-4" />}
-        <span className="truncate">{item.name}</span>
-      </div>
-      {item.children && expanded && (
-        <div>
-          {item.children.map((child: any, index: number) => (
-            <FileTreeItem key={index} item={child} level={level + 1} />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+type ViewMode = "collection" | "editor";
 
 export default function Notes() {
+  const [viewMode, setViewMode] = useState<ViewMode>("collection");
+  const [currentPath, setCurrentPath] = useState("/");
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const [showCreateNote, setShowCreateNote] = useState(false);
+  const [showCreateFolder, setShowCreateFolder] = useState(false);
+  
+  const { notes, loading, isSaving, isCreating, createNote, updateNote, deleteNote } = useNotes();
+  const { toast } = useToast();
+
+  const handleNavigateToFolder = (path: string) => {
+    setCurrentPath(path);
+  };
+
+  const handleSelectNote = (note: Note) => {
+    setSelectedNote(note);
+    setViewMode("editor");
+  };
+
+  const handleBackToCollection = () => {
+    setSelectedNote(null);
+    setViewMode("collection");
+  };
+
+  const handleCreateNote = async (title: string) => {
+    const newNote = await createNote(title, currentPath);
+    if (newNote) {
+      setSelectedNote(newNote);
+      setViewMode("editor");
+    }
+  };
+
+  const handleCreateFolder = (name: string) => {
+    // Folders are virtual - they exist based on notes' folder_path
+    // We just inform the user
+    toast({
+      title: "Folder created",
+      description: `Create a note inside "${name}" to save the folder.`,
+    });
+    const newPath = currentPath === "/" ? `/${name}` : `${currentPath}/${name}`;
+    setCurrentPath(newPath);
+  };
+
+  const handleSaveNote = async (id: string, title: string, content: string) => {
+    await updateNote(id, title, content);
+  };
+
+  const handleDeleteNote = async (id: string) => {
+    await deleteNote(id);
+    handleBackToCollection();
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 rounded-full border-4 border-accent border-t-transparent animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading notes...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background flex">
-      <div className="w-64 bg-sidebar border-r border-border flex flex-col">
-        <div className="p-4 border-b border-border">
-          <h2 className="font-semibold text-sm">Files</h2>
-        </div>
-        <div className="flex-1 overflow-y-auto py-2">
-          <div className="flex items-center justify-center h-32 text-muted-foreground text-sm">
-            No notes yet
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-background flex flex-col">
+      {viewMode === "collection" ? (
+        <CollectionView
+          notes={notes}
+          currentPath={currentPath}
+          onNavigateToFolder={handleNavigateToFolder}
+          onSelectNote={handleSelectNote}
+          onCreateNote={() => setShowCreateNote(true)}
+          onCreateFolder={() => setShowCreateFolder(true)}
+        />
+      ) : selectedNote ? (
+        <DocumentEditor
+          note={selectedNote}
+          onBack={handleBackToCollection}
+          onSave={handleSaveNote}
+          onDelete={handleDeleteNote}
+          isSaving={isSaving}
+        />
+      ) : null}
 
-      <div className="flex-1 flex flex-col">
-        <div className="border-b border-border bg-card px-6 py-3 flex items-center justify-between">
-          <h1 className="text-lg font-semibold">Notes</h1>
-          <Button variant="ghost" size="sm">
-            <Settings className="w-4 h-4 mr-2" />
-            Settings
-          </Button>
-        </div>
+      <CreateNoteDialog
+        open={showCreateNote}
+        onOpenChange={setShowCreateNote}
+        onCreateNote={handleCreateNote}
+        isCreating={isCreating}
+      />
 
-        <div className="flex-1 overflow-y-auto px-6 py-6 flex items-center justify-center">
-          <p className="text-muted-foreground">Select a note or create a new one to get started.</p>
-        </div>
-      </div>
-
-      <div className="w-80 bg-card border-l border-border flex flex-col">
-        <div className="border-b border-border px-4 py-3 flex items-center justify-between">
-          <h2 className="font-semibold">AI Companion & Graph</h2>
-          <button className="text-muted-foreground hover:text-foreground">×</button>
-        </div>
-
-        <div className="flex-1 flex flex-col">
-          <div className="flex-1 overflow-y-auto p-4 flex items-center justify-center">
-            <p className="text-sm text-muted-foreground text-center">
-              Select a note to see AI suggestions and connections.
-            </p>
-          </div>
-
-          <div className="p-4 border-t border-border">
-            <div className="flex gap-2">
-              <Input placeholder="Type a message..." className="flex-1 bg-background" />
-              <Button size="icon" className="bg-accent hover:bg-accent/90">
-                <Send className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-border p-4">
-          <h3 className="font-semibold text-sm mb-3">Mini local graph</h3>
-          <div className="aspect-square bg-background rounded-lg flex items-center justify-center">
-            <p className="text-xs text-muted-foreground">No connections yet</p>
-          </div>
-        </div>
-      </div>
+      <CreateFolderDialog
+        open={showCreateFolder}
+        onOpenChange={setShowCreateFolder}
+        onCreateFolder={handleCreateFolder}
+        currentPath={currentPath}
+      />
     </div>
   );
 }
