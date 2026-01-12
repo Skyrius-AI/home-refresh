@@ -1,4 +1,4 @@
-import { FileText, PlayCircle, ExternalLink, Link2 } from "lucide-react";
+import { FileText, PlayCircle, ExternalLink, Link2, BookOpen, Mic, Film, Newspaper } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -9,20 +9,58 @@ import {
   ExpandableCardTrigger,
   ExpandableCardContent,
 } from "@/components/ui/expandable-card";
+import { format } from "date-fns";
 
 interface LibraryCardProps {
   item: {
-    id: number;
-    type: string;
+    id: string;
     title: string;
-    date: string;
-    description: string;
-    relatedNotes: number;
+    item_type: string;
+    description: string | null;
+    url: string | null;
+    created_at: string;
   };
   isTourTarget?: boolean;
 }
 
+const getTypeIcon = (type: string) => {
+  switch (type) {
+    case "video":
+      return <PlayCircle className="w-6 h-6 text-accent" />;
+    case "documentary":
+      return <Film className="w-6 h-6 text-accent" />;
+    case "podcast":
+      return <Mic className="w-6 h-6 text-accent" />;
+    case "book":
+      return <BookOpen className="w-6 h-6 text-accent" />;
+    case "article":
+      return <Newspaper className="w-6 h-6 text-accent" />;
+    default:
+      return <FileText className="w-6 h-6 text-accent" />;
+  }
+};
+
+const getTypeLabel = (type: string) => {
+  return type.charAt(0).toUpperCase() + type.slice(1);
+};
+
+// Extract domain from description if present (format: [Domain] description)
+const extractDomain = (description: string | null): string | null => {
+  if (!description) return null;
+  const match = description.match(/^\[([^\]]+)\]/);
+  return match ? match[1] : null;
+};
+
+const extractDescription = (description: string | null): string => {
+  if (!description) return "";
+  return description.replace(/^\[[^\]]+\]\s*/, "");
+};
+
 export const LibraryCard = ({ item, isTourTarget }: LibraryCardProps) => {
+  const domain = extractDomain(item.description);
+  const cleanDescription = extractDescription(item.description);
+  const formattedDate = format(new Date(item.created_at), "MMM d, yyyy");
+
   return (
     <ExpandableCard>
       <ExpandableCardTrigger>
@@ -34,10 +72,11 @@ export const LibraryCard = ({ item, isTourTarget }: LibraryCardProps) => {
             >
               {/* Icon */}
               <div className="flex items-start justify-between mb-4">
-                {item.type === "video" ? (
-                  <PlayCircle className="w-6 h-6 text-accent" />
-                ) : (
-                  <FileText className="w-6 h-6 text-accent" />
+                {getTypeIcon(item.item_type)}
+                {domain && (
+                  <Badge variant="outline" className="text-xs">
+                    {domain}
+                  </Badge>
                 )}
               </div>
 
@@ -47,19 +86,19 @@ export const LibraryCard = ({ item, isTourTarget }: LibraryCardProps) => {
               </h3>
 
               {/* Date */}
-              <p className="text-xs text-muted-foreground mb-3">{item.date}</p>
+              <p className="text-xs text-muted-foreground mb-3">{formattedDate}</p>
 
               {/* Description */}
-              <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
-                {item.description}
-              </p>
-
-              {/* Related Notes Badge */}
-              {item.relatedNotes > 0 && (
-                <Badge variant="secondary" className="text-xs">
-                  Related to {item.relatedNotes} existing notes
-                </Badge>
+              {cleanDescription && (
+                <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
+                  {cleanDescription}
+                </p>
               )}
+
+              {/* Type Badge */}
+              <Badge variant="secondary" className="text-xs">
+                {getTypeLabel(item.item_type)}
+              </Badge>
             </div>
           </GlowingCard>
         </Card3D>
@@ -71,30 +110,37 @@ export const LibraryCard = ({ item, isTourTarget }: LibraryCardProps) => {
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-4">
-              {item.type === "video" ? (
-                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <PlayCircle className="w-6 h-6 text-accent" />
-                </div>
-              ) : (
-                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <FileText className="w-6 h-6 text-accent" />
-                </div>
-              )}
+              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
+                {getTypeIcon(item.item_type)}
+              </div>
               <div>
-                <Badge variant="outline" className="mb-2">
-                  {item.type === "video" ? "Video" : "Document"}
-                </Badge>
-                <p className="text-sm text-muted-foreground">{item.date}</p>
+                <div className="flex gap-2 mb-2">
+                  <Badge variant="outline">
+                    {getTypeLabel(item.item_type)}
+                  </Badge>
+                  {domain && (
+                    <Badge variant="secondary">
+                      {domain}
+                    </Badge>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">{formattedDate}</p>
               </div>
             </div>
             
             <h2 className="text-3xl font-bold mb-4">{item.title}</h2>
             
             <div className="flex gap-3">
-              <Button variant="default" className="gap-2">
-                <ExternalLink className="w-4 h-4" />
-                Open Source
-              </Button>
+              {item.url && (
+                <Button
+                  variant="default"
+                  className="gap-2"
+                  onClick={() => window.open(item.url!, "_blank")}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Open Source
+                </Button>
+              )}
               <Button variant="outline" className="gap-2">
                 <Link2 className="w-4 h-4" />
                 Create Connection
@@ -104,65 +150,38 @@ export const LibraryCard = ({ item, isTourTarget }: LibraryCardProps) => {
 
           <Separator className="my-6" />
 
-          {/* AI Summary */}
+          {/* Notes/Description */}
+          {cleanDescription && (
+            <>
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold mb-4">Notes</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {cleanDescription}
+                </p>
+              </div>
+              <Separator className="my-6" />
+            </>
+          )}
+
+          {/* AI Summary Placeholder */}
           <div className="mb-8">
             <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               AI Summary
             </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              {item.description} Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            <p className="text-muted-foreground leading-relaxed italic">
+              AI-generated summary will appear here once the content is processed.
             </p>
           </div>
 
           <Separator className="my-6" />
 
-          {/* Key Insights */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold mb-4">Key Insights</h3>
-            <div className="space-y-3">
-              {[
-                "Core concept explores the relationship between neural networks and cognitive systems",
-                "Proposes a novel framework for understanding information processing",
-                "Discusses practical applications in knowledge management systems",
-              ].map((insight, idx) => (
-                <div key={idx} className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-semibold text-accent">{idx + 1}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{insight}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <Separator className="my-6" />
-
-          {/* Related Notes */}
+          {/* Key Insights Placeholder */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">
-              Related Notes ({item.relatedNotes})
-            </h3>
-            <div className="grid gap-3">
-              {Array.from({ length: item.relatedNotes }).map((_, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-lg border border-border bg-card/50 hover:border-accent transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium mb-1">Connected Note {idx + 1}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Shares concepts about neural processing and knowledge graphs
-                      </p>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-muted-foreground" />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <h3 className="text-xl font-semibold mb-4">Key Insights</h3>
+            <p className="text-muted-foreground italic">
+              Key insights will be extracted after AI processing.
+            </p>
           </div>
         </div>
       </ExpandableCardContent>
