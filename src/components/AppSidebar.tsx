@@ -43,8 +43,8 @@ export function AppSidebar() {
           <NavLink
             key={item.path}
             to={item.path}
-            className="flex flex-col items-center gap-1 px-4 py-3 rounded-lg text-muted-foreground hover:text-foreground hover:bg-sidebar-accent transition-colors"
-            activeClassName="text-accent border-l-2 border-accent bg-transparent"
+            className="flex flex-col items-center gap-1 px-4 py-3 rounded-lg text-muted-foreground/60 hover:text-foreground hover:bg-sidebar-accent transition-colors"
+            activeClassName="text-foreground font-medium border-l-2 border-primary bg-primary/10"
           >
             <item.icon className="w-5 h-5" />
             <span className="text-xs">{item.label}</span>
