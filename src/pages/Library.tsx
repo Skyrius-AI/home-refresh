@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import {
   Select,
   SelectContent,
@@ -15,18 +16,49 @@ import {
   DOMAINS,
   SourceFormData,
 } from "@/components/library/AddSourceDialog";
+import { LibraryCard } from "@/components/LibraryCard";
+import { useLibraryItems, useCreateLibraryItem } from "@/hooks/useLibraryItems";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export default function Library() {
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [domainFilter, setDomainFilter] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
-  const handleAddSource = (data: SourceFormData) => {
-    // TODO: Save to database
-    console.log("New source:", data);
-    toast.success("Source added successfully!");
+  const { data: libraryItems, isLoading } = useLibraryItems(typeFilter, domainFilter);
+  const createLibraryItem = useCreateLibraryItem();
+
+  const handleAddSource = async (data: SourceFormData) => {
+    try {
+      await createLibraryItem.mutateAsync({
+        title: data.title,
+        item_type: data.type,
+        url: data.url || undefined,
+        description: data.notes || undefined,
+        domain: data.domain,
+      });
+      toast.success("Source added successfully!");
+    } catch (error) {
+      toast.error("Failed to add source");
+      console.error(error);
+    }
   };
+
+  // Filter items by search query and domain
+  const filteredItems = libraryItems?.filter((item) => {
+    const matchesSearch =
+      !searchQuery ||
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesDomain =
+      domainFilter === "all" ||
+      item.description?.toLowerCase().includes(`[${domainFilter}]`);
+
+    return matchesSearch && matchesDomain;
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -36,6 +68,8 @@ export default function Library() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input
               placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 bg-card border-border"
             />
           </div>
@@ -83,9 +117,27 @@ export default function Library() {
           </div>
         </div>
 
-        <div className="flex items-center justify-center h-64 text-muted-foreground">
-          <p>No sources added yet. Click "Add Source" to get started.</p>
-        </div>
+        {isLoading ? (
+          <div className="flex items-center justify-center h-64">
+            <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+          </div>
+        ) : filteredItems && filteredItems.length > 0 ? (
+          <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 1100: 3 }}>
+            <Masonry gutter="1.5rem">
+              {filteredItems.map((item, index) => (
+                <LibraryCard
+                  key={item.id}
+                  item={item}
+                  isTourTarget={index === 0}
+                />
+              ))}
+            </Masonry>
+          </ResponsiveMasonry>
+        ) : (
+          <div className="flex items-center justify-center h-64 text-muted-foreground">
+            <p>No sources added yet. Click "Add Source" to get started.</p>
+          </div>
+        )}
       </div>
 
       <AddSourceDialog
