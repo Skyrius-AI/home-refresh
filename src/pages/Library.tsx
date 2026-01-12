@@ -2,11 +2,31 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-
-const tabs = ["All", "Papers", "Videos", "Podcasts"];
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  AddSourceDialog,
+  SOURCE_TYPES,
+  DOMAINS,
+  SourceFormData,
+} from "@/components/library/AddSourceDialog";
+import { toast } from "sonner";
 
 export default function Library() {
-  const [activeTab, setActiveTab] = useState("All");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [domainFilter, setDomainFilter] = useState<string>("all");
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+
+  const handleAddSource = (data: SourceFormData) => {
+    // TODO: Save to database
+    console.log("New source:", data);
+    toast.success("Source added successfully!");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -19,34 +39,60 @@ export default function Library() {
               className="pl-10 bg-card border-border"
             />
           </div>
-          <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button
+            onClick={() => setIsAddDialogOpen(true)}
+            className="bg-accent text-accent-foreground hover:bg-accent/90"
+          >
             Add Source
           </Button>
         </div>
 
-        <div className="flex gap-4 mb-8 border-b border-border">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`pb-3 px-1 text-sm font-medium transition-colors relative ${
-                activeTab === tab
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {tab}
-              {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
-              )}
-            </button>
-          ))}
+        <div className="flex gap-4 mb-8">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Type:</span>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger className="w-40 bg-card">
+                <SelectValue placeholder="All Types" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover">
+                <SelectItem value="all">All Types</SelectItem>
+                {SOURCE_TYPES.map((type) => (
+                  <SelectItem key={type} value={type.toLowerCase()}>
+                    {type}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Domain:</span>
+            <Select value={domainFilter} onValueChange={setDomainFilter}>
+              <SelectTrigger className="w-44 bg-card">
+                <SelectValue placeholder="All Domains" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover">
+                <SelectItem value="all">All Domains</SelectItem>
+                {DOMAINS.map((domain) => (
+                  <SelectItem key={domain} value={domain.toLowerCase()}>
+                    {domain}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="flex items-center justify-center h-64 text-muted-foreground">
           <p>No sources added yet. Click "Add Source" to get started.</p>
         </div>
       </div>
+
+      <AddSourceDialog
+        open={isAddDialogOpen}
+        onOpenChange={setIsAddDialogOpen}
+        onSubmit={handleAddSource}
+      />
     </div>
   );
 }
