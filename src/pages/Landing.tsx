@@ -36,12 +36,12 @@ export default function Landing() {
       <div className="absolute inset-0 w-full h-full bg-background z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
 
       {/* Header */}
-      <header className="w-full px-8 py-6 flex items-center justify-between relative z-30">
-        <span className="text-2xl font-bold tracking-tight text-foreground">
+      <header className="w-full px-4 sm:px-8 py-4 sm:py-6 flex items-center justify-between relative z-30">
+        <span className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
           SKYRIUS
         </span>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Login */}
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -50,7 +50,7 @@ export default function Landing() {
           >
             <Button
               variant="outline"
-              className="rounded-full px-6 border-border text-foreground hover:bg-secondary hover:text-foreground"
+              className="rounded-full px-4 sm:px-6 border-border text-foreground hover:bg-secondary hover:text-foreground text-sm sm:text-base"
               onClick={() => navigate("/auth")}
             >
               Log in
@@ -64,7 +64,7 @@ export default function Landing() {
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <Button
-              className="rounded-full px-6 bg-foreground text-background hover:bg-foreground/90"
+              className="rounded-full px-4 sm:px-6 bg-foreground text-background hover:bg-foreground/90 text-sm sm:text-base"
               onClick={() => navigate("/auth?mode=signup")}
             >
               Sign up
@@ -74,13 +74,13 @@ export default function Landing() {
       </header>
 
       {/* Main content */}
-      <main className="flex-1 flex items-center justify-center px-8 relative z-30 pointer-events-none">
+      <main className="flex-1 flex items-center justify-center px-4 sm:px-8 relative z-30 pointer-events-none">
         <div className="max-w-4xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground"
           >
             <EncryptedHeading
               text="The most thoughtful second brain you'll ever build."
@@ -92,9 +92,9 @@ export default function Landing() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-8 flex items-center justify-center gap-3"
+            className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3"
           >
-            <span className="text-muted-foreground text-lg">
+            <span className="text-muted-foreground text-base sm:text-lg">
               A space for
             </span>
 

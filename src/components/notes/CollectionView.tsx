@@ -75,17 +75,17 @@ export function CollectionView({
   const pathParts = currentPath === "/" ? [] : currentPath.split("/").filter(Boolean);
 
   return (
-    <div className="flex-1 p-6">
+    <div className="flex-1 p-4 sm:p-6 pt-16 md:pt-6 overflow-x-hidden">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 mb-6 text-sm">
+      <div className="flex items-center gap-2 mb-6 text-sm overflow-x-auto">
         <button
           onClick={() => onNavigateToFolder("/")}
-          className="text-muted-foreground hover:text-foreground transition-colors"
+          className="text-muted-foreground hover:text-foreground transition-colors shrink-0"
         >
           Notes
         </button>
         {pathParts.map((part, index) => (
-          <div key={index} className="flex items-center gap-2">
+          <div key={index} className="flex items-center gap-2 shrink-0">
             <ChevronRight className="w-4 h-4 text-muted-foreground" />
             <button
               onClick={() =>
@@ -100,7 +100,7 @@ export function CollectionView({
       </div>
 
       {/* Actions */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex flex-wrap gap-2 sm:gap-3 mb-6">
         <Button variant="outline" size="sm" onClick={onCreateNote}>
           <Plus className="w-4 h-4 mr-2" />
           New Note
@@ -112,7 +112,7 @@ export function CollectionView({
       </div>
 
       {/* Content Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
         {/* Folders */}
         {folders.map((folder) => (
           <Card

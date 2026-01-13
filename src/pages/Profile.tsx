@@ -48,10 +48,10 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-8 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-16 md:pt-6">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold">Profile</h1>
-          <div className="flex items-center gap-4">
+          <h1 className="text-xl sm:text-2xl font-bold">Profile</h1>
+          <div className="flex items-center gap-2 sm:gap-4">
             <button className="p-2 hover:bg-muted rounded-lg">
               <Search className="w-5 h-5" />
             </button>
@@ -66,29 +66,29 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="flex items-start gap-4 mb-8">
-          <Avatar className="w-16 h-16">
+        <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
+          <Avatar className="w-16 h-16 shrink-0">
             <AvatarFallback className="bg-muted">
               <UserIcon className="w-8 h-8" />
             </AvatarFallback>
           </Avatar>
-          <div className="flex-1">
-            <div className="flex items-center gap-4 mb-2">
-              <h2 className="text-2xl font-bold">{user?.email?.split('@')[0] || 'User'}</h2>
-              <Button size="sm" variant="outline">
+          <div className="flex-1 min-w-0 w-full">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+              <h2 className="text-xl sm:text-2xl font-bold truncate">{user?.email?.split('@')[0] || 'User'}</h2>
+              <Button size="sm" variant="outline" className="w-fit">
                 Edit Profile
               </Button>
             </div>
-            <p className="text-muted-foreground">{user?.email}</p>
+            <p className="text-muted-foreground text-sm sm:text-base truncate">{user?.email}</p>
           </div>
-          <div className="flex gap-8">
+          <div className="flex gap-6 sm:gap-8 mt-4 sm:mt-0 shrink-0">
             <div className="text-center">
-              <div className="text-2xl font-bold">0</div>
-              <div className="text-sm text-muted-foreground">Connections</div>
+              <div className="text-xl sm:text-2xl font-bold">0</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Connections</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">0</div>
-              <div className="text-sm text-muted-foreground">Notes</div>
+              <div className="text-xl sm:text-2xl font-bold">0</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Notes</div>
             </div>
           </div>
         </div>
