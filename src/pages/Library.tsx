@@ -62,30 +62,30 @@ export default function Library() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-8 py-6">
-        <div className="flex items-center justify-between mb-8">
-          <div className="relative flex-1 max-w-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-16 md:pt-6">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-8">
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-card border-border"
+              className="pl-10 bg-card border-border w-full"
             />
           </div>
           <Button
             onClick={() => setIsAddDialogOpen(true)}
-            className="bg-accent text-accent-foreground hover:bg-accent/90"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 shrink-0"
           >
             Add Source
           </Button>
         </div>
 
-        <div className="flex gap-4 mb-8">
+        <div className="flex flex-wrap gap-3 sm:gap-4 mb-8">
           <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Type:</span>
+            <span className="text-sm text-muted-foreground hidden sm:inline">Type:</span>
             <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-40 bg-card">
+              <SelectTrigger className="w-32 sm:w-40 bg-card">
                 <SelectValue placeholder="All Types" />
               </SelectTrigger>
               <SelectContent className="bg-popover">
@@ -100,9 +100,9 @@ export default function Library() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Domain:</span>
+            <span className="text-sm text-muted-foreground hidden sm:inline">Domain:</span>
             <Select value={domainFilter} onValueChange={setDomainFilter}>
-              <SelectTrigger className="w-44 bg-card">
+              <SelectTrigger className="w-36 sm:w-44 bg-card">
                 <SelectValue placeholder="All Domains" />
               </SelectTrigger>
               <SelectContent className="bg-popover">

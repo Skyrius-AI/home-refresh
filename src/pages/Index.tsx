@@ -5,11 +5,11 @@ import { Sparkles, Share2 } from "lucide-react";
 export default function Index() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-8 py-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-16 md:pt-6 space-y-6">
         <Card className="bg-gradient-to-r from-card to-card/50 border-accent/50">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-xl">Weekly Summary</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Weekly Summary</CardTitle>
               <p className="text-muted-foreground text-sm mt-1">Your progress this week</p>
             </div>
             <Button variant="ghost" size="icon">
@@ -23,8 +23,8 @@ export default function Index() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Knowledge Graph Preview</CardTitle>
+              <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <CardTitle className="text-base sm:text-lg">Knowledge Graph Preview</CardTitle>
                 <Button variant="ghost" size="sm">
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="3" />
@@ -35,14 +35,14 @@ export default function Index() {
               </CardHeader>
               <CardContent>
                 <div className="aspect-video bg-background rounded-lg flex items-center justify-center">
-                  <p className="text-muted-foreground">Your knowledge graph will appear here</p>
+                  <p className="text-muted-foreground text-sm sm:text-base text-center px-4">Your knowledge graph will appear here</p>
                 </div>
               </CardContent>
             </Card>
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Recommendations</h2>
+            <h2 className="text-lg sm:text-xl font-semibold">Recommendations</h2>
             
             <Card className="hover:border-accent transition-colors">
               <CardContent className="pt-6 text-center">

@@ -54,9 +54,9 @@ function AppContent() {
           path="/"
           element={
             <ProtectedRoute>
-              <div className="flex min-h-screen">
+              <div className="flex min-h-screen w-full overflow-x-hidden">
                 <AppSidebar />
-                <main className="flex-1 ml-20">
+                <main className="flex-1 md:ml-20 w-full min-w-0">
                   <Index />
                 </main>
               </div>
@@ -67,9 +67,9 @@ function AppContent() {
           path="/library"
           element={
             <ProtectedRoute>
-              <div className="flex min-h-screen">
+              <div className="flex min-h-screen w-full overflow-x-hidden">
                 <AppSidebar />
-                <main className="flex-1 ml-20">
+                <main className="flex-1 md:ml-20 w-full min-w-0">
                   <Library />
                 </main>
               </div>
@@ -80,9 +80,9 @@ function AppContent() {
           path="/notes"
           element={
             <ProtectedRoute>
-              <div className="flex min-h-screen">
+              <div className="flex min-h-screen w-full overflow-x-hidden">
                 <AppSidebar />
-                <main className="flex-1 ml-20">
+                <main className="flex-1 md:ml-20 w-full min-w-0">
                   <Notes />
                 </main>
               </div>
@@ -93,9 +93,9 @@ function AppContent() {
           path="/recall"
           element={
             <ProtectedRoute>
-              <div className="flex min-h-screen">
+              <div className="flex min-h-screen w-full overflow-x-hidden">
                 <AppSidebar />
-                <main className="flex-1 ml-20">
+                <main className="flex-1 md:ml-20 w-full min-w-0">
                   <Recall />
                 </main>
               </div>
@@ -106,9 +106,9 @@ function AppContent() {
           path="/profile"
           element={
             <ProtectedRoute>
-              <div className="flex min-h-screen">
+              <div className="flex min-h-screen w-full overflow-x-hidden">
                 <AppSidebar />
-                <main className="flex-1 ml-20">
+                <main className="flex-1 md:ml-20 w-full min-w-0">
                   <Profile />
                 </main>
               </div>
