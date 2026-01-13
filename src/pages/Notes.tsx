@@ -85,9 +85,12 @@ export default function Notes() {
       ) : selectedNote ? (
         <DocumentEditor
           note={selectedNote}
+          notes={notes}
           onBack={handleBackToCollection}
           onSave={handleSaveNote}
           onDelete={handleDeleteNote}
+          onSelectNote={handleSelectNote}
+          onCreateNote={() => setShowCreateNote(true)}
           isSaving={isSaving}
         />
       ) : null}
