@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/components/ui/resizable";
+import { RichTextEditor } from "./editor/RichTextEditor";
+import { ProjectNavigator } from "./editor/ProjectNavigator";
+import { NoteChat } from "./editor/NoteChat";
+import { KnowledgeGraph } from "./editor/KnowledgeGraph";
 
 interface Note {
   id: string;
@@ -14,22 +21,29 @@ interface Note {
 
 interface DocumentEditorProps {
   note: Note;
+  notes: Note[];
   onBack: () => void;
   onSave: (id: string, title: string, content: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
+  onSelectNote: (note: Note) => void;
+  onCreateNote: () => void;
   isSaving: boolean;
 }
 
 export function DocumentEditor({
   note,
+  notes,
   onBack,
   onSave,
   onDelete,
+  onSelectNote,
+  onCreateNote,
   isSaving,
 }: DocumentEditorProps) {
   const [title, setTitle] = useState(note.title);
   const [content, setContent] = useState(note.content || "");
   const [hasChanges, setHasChanges] = useState(false);
+  const [isNavigatorCollapsed, setIsNavigatorCollapsed] = useState(false);
 
   useEffect(() => {
     setTitle(note.title);
@@ -58,11 +72,18 @@ export function DocumentEditor({
     }
   };
 
+  const handleSelectNote = (noteId: string) => {
+    const selectedNote = notes.find((n) => n.id === noteId);
+    if (selectedNote) {
+      onSelectNote(selectedNote);
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col h-full">
       {/* Header */}
-      <div className="border-b border-border bg-card px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <div className="border-b border-border bg-card px-4 py-2 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={onBack}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -91,22 +112,55 @@ export function DocumentEditor({
         </div>
       </div>
 
-      {/* Editor */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-3xl mx-auto">
-          <Input
-            value={title}
-            onChange={(e) => handleTitleChange(e.target.value)}
-            placeholder="Note title..."
-            className="text-2xl font-bold border-none bg-transparent px-0 mb-6 focus-visible:ring-0"
-          />
-          <Textarea
-            value={content}
-            onChange={(e) => handleContentChange(e.target.value)}
-            placeholder="Start writing..."
-            className="min-h-[60vh] border-none bg-transparent px-0 resize-none focus-visible:ring-0 text-base leading-relaxed"
+      {/* Main Content */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left Sidebar - Project Navigator */}
+        <div
+          className={`shrink-0 transition-all duration-200 ${
+            isNavigatorCollapsed ? "w-10" : "w-56"
+          }`}
+        >
+          <ProjectNavigator
+            notes={notes}
+            currentNoteId={note.id}
+            onSelectNote={handleSelectNote}
+            onCreateNote={onCreateNote}
+            isCollapsed={isNavigatorCollapsed}
+            onToggleCollapse={() => setIsNavigatorCollapsed(!isNavigatorCollapsed)}
           />
         </div>
+
+        {/* Center + Right Panels */}
+        <ResizablePanelGroup direction="horizontal" className="flex-1">
+          {/* Center - Main Editor */}
+          <ResizablePanel defaultSize={65} minSize={40}>
+            <RichTextEditor
+              title={title}
+              content={content}
+              onTitleChange={handleTitleChange}
+              onContentChange={handleContentChange}
+            />
+          </ResizablePanel>
+
+          <ResizableHandle withHandle />
+
+          {/* Right Sidebar - Chat + Knowledge Graph */}
+          <ResizablePanel defaultSize={35} minSize={25}>
+            <ResizablePanelGroup direction="vertical">
+              {/* Top - LLM Chat */}
+              <ResizablePanel defaultSize={50} minSize={30}>
+                <NoteChat noteId={note.id} noteTitle={note.title} />
+              </ResizablePanel>
+
+              <ResizableHandle withHandle />
+
+              {/* Bottom - Knowledge Graph */}
+              <ResizablePanel defaultSize={50} minSize={25}>
+                <KnowledgeGraph noteId={note.id} noteTitle={note.title} />
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </div>
   );
