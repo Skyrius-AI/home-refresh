@@ -122,6 +122,7 @@ All colors MUST be HSL.
     --shadow-xl: 16px 16px 0px 0px #ffffff;
     --shadow-2xl: 24px 24px 0px 0px #ffffff;
   }
+
 }
 
 @layer base {
