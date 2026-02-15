@@ -1,10 +1,10 @@
-import { Home, Library, FileText, Clock, User, LogOut, Sun, Moon, Menu, X } from "lucide-react";
+import { Home, Library, FileText, Clock, User, LogOut, Menu, X } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { ThemeSettingsMenu } from "@/components/ThemeSettingsMenu";
 
 const sidebarItems = [
   { icon: Home, label: "Home", path: "/" },
@@ -16,7 +16,6 @@ const sidebarItems = [
 
 export function AppSidebar() {
   const { signOut } = useAuth();
-  const { theme, setTheme } = useTheme();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
 
@@ -24,10 +23,6 @@ export function AppSidebar() {
   useEffect(() => {
     setIsMobileOpen(false);
   }, [location.pathname]);
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   return (
     <>
@@ -56,18 +51,7 @@ export function AppSidebar() {
         }`}
       >
         <div className="flex flex-col items-center gap-2 mb-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            className="w-10 h-10 rounded-lg bg-accent/20 hover:bg-accent/30 flex items-center justify-center"
-          >
-            {theme === "dark" ? (
-              <Sun className="w-5 h-5" />
-            ) : (
-              <Moon className="w-5 h-5" />
-            )}
-          </Button>
+          <ThemeSettingsMenu />
           <span className="text-xs font-medium">SKYRIUS</span>
         </div>
 
